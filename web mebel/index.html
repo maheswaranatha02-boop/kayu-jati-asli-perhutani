@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adhi Manunggal Jati</title>
+  <link rel="stylesheet" href="stylebase.css">
+  <link rel="stylesheet" href="responsifui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-left">
+      <img src="" alt="" id="modalImg" class="modal-img">
+      <div class="modal-img-label" id="modalLabel">Produk Unggulan</div>
+    </div>
+    <div class="modal-right">
+      <div class="modal-num" id="modalNum">01</div>
+      <span class="modal-icon" id="modalIcon"></span>
+      <h2 class="modal-title" id="modalTitle">Pintu Solid</h2>
+      <p class="modal-desc" id="modalDesc">Kokoh, elegan, dan tahan lama.</p>
+      <div class="modal-price-wrap">
+        <span class="modal-price-label">Mulai dari</span>
+        <span class="modal-price" id="modalPrice">Rp 1.200.000</span>
+      </div>
+      <ul class="modal-specs" id="modalSpecs"></ul>
+      <div class="modal-actions">
+        <a href="#" class="btn-primary modal-wa" id="modalWa">Pesan via WhatsApp</a>
+        <button class="btn-outline modal-close-btn" id="modalCloseBtn">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="logo-wrap">
+    <img src="./logoammj.jpeg" class="logo-img" alt="Logo Adhi Manunggal Jati">
+    <div>
+      <div class="logo-text">Adhi Manunggal Jati</div>
+      <div class="logo-sub">Mebel Kayu Jati Custom</div>
+    </div>
+  </div>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#">Home</a></li>
+    <li><a href="#galeri">Galeri</a></li>
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#layanan">Layanan</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-label">Pengrajin Kayu Sejak 2009</div>
+      <h1>Kualitas <em>Jati</em> yang Premium</h1>
+      <p>Mebel berkualitas tinggi dengan sentuhan elegan dan modern. Menghadirkan layanan terbaik untuk produsen mebel dan kebutuhan bahan kayu mentah.</p>
+      <div class="hero-btns">
+        <a href="#produk" class="btn-primary">Lihat Produk</a>
+        <a href="#layanan" class="btn-outline">Tentang Kami</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="./kayujati.jpeg" class="hero-img-main" alt="Pintu Jati Premium">
+      <img src="./kayujati2.jpeg" class="hero-img-accent" alt="Pintu Custom Jati">
+      <div class="hero-stat">
+        <strong>17+</strong>
+        <span>Tahun Pengalaman</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><div class="strip-dot"></div>Kayu Jati Pilihan</div>
+  <div class="strip-item"><div class="strip-dot"></div>Custom Order</div>
+  <div class="strip-item"><div class="strip-dot"></div>Pengiriman Seluruh Indonesia</div>
+  <div class="strip-item"><div class="strip-dot"></div>Garansi Kualitas</div>
+  <div class="strip-item"><div class="strip-dot"></div>Harga Kompetitif</div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery" id="galeri">
+  <div class="gallery-inner">
+    <div class="gallery-header">
+      <div>
+        <div class="section-label">Koleksi Kami</div>
+        <h2 class="section-title">Keindahan yang <em>Nyata</em></h2>
+      </div>
+      <p class="gallery-desc">Setiap potongan kayu jati mengandung cerita alam yang mengagumkan — kini hadir dalam setiap produk kami.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="g-wrap g-main"><img src="./pintujati1.jpeg" alt="Pintu Jati Solid"></div>
+      <div class="g-wrap"><img src="./pintuminimalis.jpeg" alt="Pintu Minimalis"></div>
+      <div class="g-wrap"><img src="./pintucustom.jpeg" alt="Pintu Custom"></div>
+      <div class="g-wrap"><img src="./pintuukiran.jpeg" alt="Pintu Ukiran"></div>
+      <div class="g-wrap"><img src="./glondongtpk.jpeg" alt="Kayu Jati Glondongan"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUK -->
+<section class="produk" id="produk">
+  <div class="produk-inner">
+    <div class="section-label">Produk Unggulan</div>
+    <h2 class="section-title">Karya Terbaik <em>Kami</em></h2>
+    <div class="produk-grid">
+
+      <!-- 01: Pintu Solid -->
+      <div class="card fade-up" data-modal="true"
+           data-num="01" data-icon="" data-title="Pintu Solid"
+           data-desc="Dibuat dari kayu jati tua pilihan dengan ketebalan optimal dan proses pengeringan alami. Kokoh, kedap suara, dan tahan terhadap perubahan cuaca — pilihan sempurna untuk hunian berkelas."
+           data-price="Rp 1.500.000 – Rp 4.500.000"
+           data-specs="Bahan: Kayu Jati Tua Grade A|Ketebalan: 3,5 cm / 4 cm / Custom|Finishing: Natural / Duco / Antique|Garansi: 2 Tahun|Pengiriman: Seluruh Indonesia"
+           data-img="./pintujati1.jpeg" data-label="Pintu Solid Jati">
+        <div class="card-num">01</div>
+        <span class="card-icon"></span>
+        <h3>Pintu Solid</h3>
+        <p>Kokoh, kedap suara, dan tahan cuaca. Dibuat dari kayu jati tua pilihan dengan ketebalan optimal untuk keamanan hunian Anda.</p>
+        <div class="card-arrow">↗</div>
+        <div class="card-hint">Klik untuk detail & harga</div>
+      </div>
+
+      <!-- 02: Pintu Minimalis -->
+      <div class="card fade-up" data-modal="true"
+           data-num="02" data-icon="" data-title="Pintu Minimalis"
+           data-desc="Desain clean dan modern yang memadukan keindahan serat kayu jati asli dengan tampilan kontemporer. Cocok untuk hunian bergaya modern, Scandinavian, maupun industrial."
+           data-price="Rp 1.200.000 – Rp 3.800.000"
+           data-specs="Bahan: Kayu Jati Pilihan|Desain: Panel Datar / Kaca / Kombinasi|Finishing: Natural Oil / Melamine / Duco Putih|Ukuran: Standard & Custom|Warna: Natural / Putih / Abu"
+           data-img="./pintuminimalis.jpeg" data-label="Pintu Minimalis Jati">
+        <div class="card-num">02</div>
+        <span class="card-icon"></span>
+        <h3>Pintu Minimalis</h3>
+        <p>Desain bersih dan modern untuk rumah kekinian. Serat jati alami tampil elegan dalam balutan estetika kontemporer.</p>
+        <div class="card-arrow">↗</div>
+        <div class="card-hint">Klik untuk detail & harga</div>
+      </div>
+
+      <!-- 03: Pintu Custom -->
+      <div class="card fade-up" data-modal="true"
+           data-num="03" data-icon="" data-title="Pintu Custom"
+           data-desc="Wujudkan pintu impian Anda sesuai desain, ukuran, dan finishing yang Anda inginkan. Kami siap mengerjakan dari desain ukiran tradisional hingga panel modern dengan presisi tinggi."
+           data-price="Rp 2.000.000 – Rp 10.000.000"
+           data-specs="Bahan: Kayu Jati Solid|Desain: Sesuai Request / Gambar Teknik|Finishing: HPL / Natural / Duco / Antique|Custom Dimensi: Ya|Pemasangan: Tersedia (Jawa)"
+           data-img="./pintucustom.jpeg" data-label="Pintu Custom Jati">
+        <div class="card-num">03</div>
+        <span class="card-icon"></span>
+        <h3>Pintu Custom</h3>
+        <p>Bebas tentukan desain, ukuran, dan finishing. Kami siap mewujudkan pintu impian Anda dengan detail yang presisi dan rapi.</p>
+        <div class="card-arrow">↗</div>
+        <div class="card-hint">Klik untuk detail & harga</div>
+      </div>
+
+      <!-- 04: Kusen -->
+      <div class="card fade-up" data-modal="true"
+           data-num="04" data-icon="" data-title="Kusen"
+           data-desc="Kusen kayu jati solid yang kuat dan presisi — fondasi penting untuk pemasangan pintu dan jendela yang kokoh. Tahan rayap, tidak mudah melengkung, dan awet untuk jangka panjang."
+           data-price="Rp 800.000 – Rp 3.500.000"
+           data-specs="Bahan: Kayu Jati Tua|Tipe: Kusen Pintu / Kusen Jendela / Set Lengkap|Finishing: Natural / Cat Dasar / Siap Pasang|Ukuran: Standard & Custom|Perlakuan: Anti Rayap & Jamur"
+           data-img="./tpk2.jpeg" data-label="Kusen Jati">
+        <div class="card-num">04</div>
+        <span class="card-icon"></span>
+        <h3>Kusen</h3>
+        <p>Kokoh, presisi, dan tahan rayap. Kusen jati solid sebagai fondasi pintu dan jendela yang kuat untuk hunian Anda.</p>
+        <div class="card-arrow">↗</div>
+        <div class="card-hint">Klik untuk detail & harga</div>
+      </div>
+
+      <!-- 05: Bahan Kayu Mentah -->
+      <div class="card fade-up" data-modal="true"
+           data-num="05" data-icon="" data-title="Bahan Kayu Mentah"
+           data-desc="Suplai kayu jati mentah berkualitas tinggi langsung dari sumber untuk produsen mebel, kontraktor, dan pengrajin."
+           data-price="Rp 850.000 / m³ – Rp 4.200.000 / m³"
+           data-specs="Kelas: A / B / C (sesuai kebutuhan)|Bentuk: Balok / Papan / Olahan|Kadar Air: < 12% (Kiln Dry)|MOQ: 1 m³|Pengiriman: Seluruh Indonesia"
+           data-img="./glondongrandu.jpeg" data-label="Bahan Baku Kayu">
+        <div class="card-num">05</div>
+        <span class="card-icon"></span>
+        <h3>Bahan Kayu Mentah</h3>
+        <p>Suplai kayu jati mentah berkualitas untuk produsen mebel dengan harga pabrik yang bersaing.</p>
+        <div class="card-arrow">↗</div>
+        <div class="card-hint">Klik untuk detail & harga</div>
+      </div>
+
+      <!-- 06: Finishing & Ukiran -->
+      <div class="card fade-up" data-modal="true"
+           data-num="06" data-icon="" data-title="Finishing & Ukiran"
+           data-desc="Layanan finishing ulang, reparasi, dan ukiran khas Jawa untuk mebel lama maupun baru."
+           data-price="Mulai Rp 150.000 / item"
+           data-specs="Jenis Finishing: Natural / Duco / Antique / Melamine|Ukiran: Jepara / Bali / Minimalis|Reparasi: Perbaikan & Restorasi|Waktu Pengerjaan: 3–14 hari|Area Pengerjaan: Lokal & Kirim"
+           data-img="./pintuukiran.jpeg" data-label="Finishing & Ukiran Jawa">
+        <div class="card-num">06</div>
+        <span class="card-icon"></span>
+        <h3>Finishing & Ukiran</h3>
+        <p>Layanan finishing premium dan ukiran khas Jawa. Setiap detail dikerjakan oleh pengrajin berpengalaman.</p>
+        <div class="card-arrow">↗</div>
+        <div class="card-hint">Klik untuk detail & harga</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN -->
+<section class="layanan" id="layanan">
+  <div class="layanan-inner">
+    <div class="layanan-img-wrap">
+      <img src="./pintucustom.jpeg" alt="Workshop Kayu Jati">
+      <div class="layanan-badge">
+        <strong>500+</strong>
+        <span>Pelanggan Puas</span>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Mengapa Kami</div>
+      <h2 class="section-title">Kualitas yang Bisa <em>Dipercaya</em></h2>
+      <p class="layanan-desc">Dengan pengalaman lebih dari 10 tahun, kami berkomitmen menghadirkan produk mebel kayu jati yang tidak hanya indah, tetapi juga tahan lama untuk generasi berikutnya.</p>
+      <ul class="layanan-list">
+        <li>
+          <div class="check"></div>
+          <div><strong>Kayu Jati Grade A</strong><p>Seluruh bahan baku bersumber dari perkebunan jati teregulasi dengan kualitas terjamin.</p></div>
+        </li>
+        <li>
+          <div class="check"></div>
+          <div><strong>Pengerjaan Handmade</strong><p>Setiap produk dikerjakan tangan oleh pengrajin berpengalaman dengan ketelitian tinggi.</p></div>
+        </li>
+        <li>
+          <div class="check"></div>
+          <div><strong>Custom Order Tersedia</strong><p>Kami melayani pesanan custom sesuai dimensi, desain, dan finishing yang Anda inginkan.</p></div>
+        </li>
+        <li>
+          <div class="check"></div>
+          <div><strong>Pengiriman Aman</strong><p>Layanan pengiriman ke seluruh Indonesia dengan packaging khusus agar produk tiba sempurna.</p></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner" id="kontak">
+  <h2>Siap Mewujudkan Mebel Impian Anda?</h2>
+  <p>Konsultasikan kebutuhan Anda dengan tim kami — gratis, tanpa komitmen.</p>
+  <a href="https://wa.me/6282135639778" target="_blank" class="btn-primary">Hubungi Kami Sekarang</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Adhi Manunggal Jati</h3>
+      <p>Produsen dan distributor mebel kayu jati. Menghadirkan keindahan alam dalam setiap karya sejak 2009.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigasi</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#layanan">Layanan</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <ul>
+        <li><a href="https://wa.me/6282135639778" target="_blank">WhatsApp: +62 821-3563-9778</a></li>
+        <li><a href="mailto:info@ammj.com">Email: info@ammj.com</a></li>
+        <li><a href="#">Instagram: @adhimanunggaljati</a></li>
+        <li><a href="#">Jl. Raya Manggung, Jawa Tengah</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Adhi Manunggal Jati. Semua hak dilindungi.</p>
+    <p class="footer-credit">Dibuat dengan Hati untuk kualitas terbaik</p>
+  </div>
+</footer>
+
+<script src="lohikagesture.js"></script>
+</body>
+</html>
