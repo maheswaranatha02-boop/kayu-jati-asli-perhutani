@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Adhi Manunggal Jati</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --brown-900: #1a0f08; --brown-800: #2e1a0e; --brown-700: #4a2c18;
+      --brown-600: #6b3f22; --brown-500: #8b5430; --brown-300: #c4865a;
+      --brown-200: #dba882; --brown-100: #edd8c0;
+      --gold: #c9a84c; --gold-light: #e8c97a;
+      --green: #25d366; --red: #e74c3c; --red-dark: #c0392b;
+    }
+    body { font-family: 'Jost', sans-serif; background: var(--brown-900); color: var(--brown-100); min-height: 100vh; }
+
+    /* LOGIN */
+    #loginScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a0f08 0%, #2e1a0e 50%, #1a0f08 100%); padding: 1.5rem; }
+    .login-box { background: linear-gradient(145deg, #2e1a0e, #1a0f08); border: 1px solid rgba(201,168,76,0.3); padding: 2.5rem 2rem; width: 100%; max-width: 400px; position: relative; overflow: hidden; }
+    .login-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold)); }
+    .login-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; }
+    .login-logo img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+    .login-logo h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold-light); }
+    .login-logo span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brown-300); display: block; }
+    .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: 0.25rem; }
+    .login-sub { font-size: 0.8rem; color: var(--brown-300); margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .form-group input { width: 100%; padding: 0.8rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.25); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.3s; }
+    .form-group input:focus { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+    .form-group input::placeholder { color: var(--brown-500); }
+    .btn-login { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, #a8752e 100%); color: var(--brown-900); font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; }
+    .btn-login:hover { background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+    .login-error { background: rgba(231,76,60,0.15); border: 1px solid rgba(231,76,60,0.4); color: #e74c3c; padding: 0.7rem 1rem; font-size: 0.8rem; margin-top: 1rem; display: none; }
+    .login-error.show { display: block; }
+
+    /* DASHBOARD */
+    #dashboard { display: none; }
+    .topbar { position: sticky; top: 0; z-index: 100; background: rgba(26,15,8,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.2); padding: 0.9rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-left img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+    .topbar-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold-light); }
+    .topbar-sub { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--brown-300); }
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .badge-admin { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.4); padding: 0.3rem 0.7rem; }
+    .btn-logout { padding: 0.45rem 1rem; background: transparent; border: 1px solid rgba(231,76,60,0.4); color: #e74c3c; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; font-family: 'Jost', sans-serif; }
+    .btn-logout:hover { background: rgba(231,76,60,0.15); }
+    .main-content { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border: 1px solid rgba(201,168,76,0.2); padding: 1.2rem 1.5rem; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-light); line-height: 1; }
+    .stat-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--brown-300); margin-top: 0.3rem; }
+
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+    .section-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .search-input { min-width: 200px; max-width: 300px; width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.25); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.85rem; outline: none; transition: border-color 0.3s, background 0.3s; }
+    .search-input:focus { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+    .section-header h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; }
+    .section-header h3 span { font-style: italic; color: var(--gold-light); }
+    .form-card { background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border: 1px solid rgba(201,168,76,0.2); padding: 1.8rem; margin-bottom: 2rem; position: relative; }
+    .form-card::before { content: ''; position: absolute; top: 0; left: 0; width: 60px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .field label { display: block; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .field input, .field textarea { width: 100%; padding: 0.75rem 0.9rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.85rem; outline: none; transition: border-color 0.3s; resize: vertical; }
+    .field input:focus, .field textarea:focus { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+    .field input::placeholder, .field textarea::placeholder { color: var(--brown-600); }
+    .field textarea { min-height: 80px; }
+    .field .hint { font-size: 0.65rem; color: var(--brown-500); margin-top: 0.3rem; }
+    .form-actions { display: flex; gap: 0.75rem; margin-top: 1.2rem; flex-wrap: wrap; }
+    .btn-add { padding: 0.8rem 2rem; background: linear-gradient(135deg, var(--gold), #a8752e); color: var(--brown-900); font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; }
+    .btn-add:hover { background: linear-gradient(135deg, var(--gold-light), var(--gold)); transform: translateY(-1px); }
+    .btn-add:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-reset { padding: 0.8rem 1.5rem; background: transparent; border: 1px solid rgba(201,168,76,0.3); color: var(--brown-300); font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+    .btn-reset:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 1px solid rgba(201,168,76,0.3); }
+    thead th { text-align: left; padding: 0.7rem 0.9rem; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+    tbody tr:hover { background: rgba(201,168,76,0.04); }
+    tbody td { padding: 0.85rem 0.9rem; font-size: 0.82rem; color: var(--brown-200); vertical-align: middle; }
+    .td-num { font-family: 'Playfair Display', serif; color: rgba(201,168,76,0.4) !important; font-size: 1rem !important; }
+    .td-name { font-weight: 500; color: #fff !important; }
+    .td-price { color: var(--gold-light) !important; font-size: 0.78rem !important; }
+    .td-actions { display: flex; gap: 0.5rem; align-items: center; }
+    .btn-edit, .btn-del { padding: 0.4rem 0.8rem; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid; cursor: pointer; transition: all 0.25s; font-family: 'Jost', sans-serif; background: transparent; }
+    .btn-edit { border-color: rgba(201,168,76,0.4); color: var(--gold); }
+    .btn-edit:hover { background: rgba(201,168,76,0.12); }
+    .btn-del { border-color: rgba(231,76,60,0.35); color: var(--red); }
+    .btn-del:hover { background: rgba(231,76,60,0.12); }
+    .loading-row td { text-align: center; color: var(--brown-500); padding: 2rem; font-size: 0.85rem; }
+
+    .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; padding: 1rem 1.5rem; font-size: 0.82rem; font-weight: 500; border-left: 3px solid; max-width: 320px; transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(10px); }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: rgba(37,211,102,0.12); border-color: var(--green); color: #2ecc71; }
+    .toast.error { background: rgba(231,76,60,0.12); border-color: var(--red); color: var(--red); }
+    .toast.info { background: rgba(201,168,76,0.12); border-color: var(--gold); color: var(--gold-light); }
+
+    .edit-overlay { position: fixed; inset: 0; z-index: 998; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; visibility: hidden; transition: all 0.3s; }
+    .edit-overlay.active { opacity: 1; visibility: visible; }
+    .edit-box { background: linear-gradient(145deg, #2e1a0e, #1a0f08); border: 1px solid rgba(201,168,76,0.3); padding: 2rem; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.35s; position: relative; }
+    .edit-overlay.active .edit-box { transform: translateY(0); }
+    .edit-box h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 1.5rem; }
+    .edit-close { position: absolute; top: 1rem; right: 1rem; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold-light); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+    .edit-close:hover { background: var(--gold); color: var(--brown-900); }
+
+    .confirm-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; visibility: hidden; transition: all 0.3s; }
+    .confirm-overlay.active { opacity: 1; visibility: visible; }
+    .confirm-box { background: linear-gradient(145deg, #2e1a0e, #1a0f08); border: 1px solid rgba(231,76,60,0.3); padding: 2rem; max-width: 380px; width: 100%; text-align: center; transform: scale(0.95); transition: transform 0.3s; }
+    .confirm-overlay.active .confirm-box { transform: scale(1); }
+    .confirm-box h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem; }
+    .confirm-box p { font-size: 0.82rem; color: var(--brown-300); margin-bottom: 1.5rem; line-height: 1.6; }
+    .confirm-actions { display: flex; gap: 0.75rem; justify-content: center; }
+    .btn-confirm-del { padding: 0.7rem 1.5rem; background: var(--red); border: none; color: #fff; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+    .btn-confirm-del:hover { background: var(--red-dark); }
+    .btn-confirm-cancel { padding: 0.7rem 1.5rem; background: transparent; border: 1px solid rgba(201,168,76,0.3); color: var(--brown-200); font-family: 'Jost', sans-serif; font-size: 0.78rem; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .stats-row { gap: 0.75rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .full { grid-column: 1; }
+      .topbar { padding: 0.8rem 1rem; }
+      .main-content { padding: 1.5rem 1rem; }
+      thead th:nth-child(3), thead th:nth-child(4),
+      tbody td:nth-child(3), tbody td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="./assets/logoammj.jpeg" alt="Logo">
+      <div><h2>Adhi Manunggal Jati</h2><span>Panel Admin</span></div>
+    </div>
+    <h1 class="login-title">Masuk Panel</h1>
+    <p class="login-sub">Khusus administrator website</p>
+    <div class="form-group"><label>Username</label><input type="text" id="inputUser" placeholder="Username" autocomplete="username"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="inputPass" placeholder="Password" autocomplete="current-password"></div>
+    <button class="btn-login" onclick="doLogin()">Masuk</button>
+    <div class="login-error" id="loginError">Username atau password salah.</div>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="./assets/logoammj.jpeg" alt="Logo">
+      <div><div class="topbar-title">Adhi Manunggal Jati</div><div class="topbar-sub">Panel Administrator</div></div>
+    </div>
+    <div class="topbar-right">
+      <span class="badge-admin">Admin</span>
+      <a href="index.html" target="_blank" style="font-size:0.7rem;color:var(--brown-300);text-decoration:none;letter-spacing:0.1em;">↗ Lihat Website</a>
+      <button class="btn-logout" onclick="doLogout()">Keluar</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Produk</div></div>
+      <div class="stat-card"><div class="stat-num" id="statCustom">—</div><div class="stat-label">Harga Custom</div></div>
+      <div class="stat-card"><div class="stat-num" id="statDb">—</div><div class="stat-label">Database</div></div>
+    </div>
+
+    <div class="section-header"><h3>Tambah <span>Produk Baru</span></h3></div>
+    <div class="form-card">
+      <div class="form-grid">
+        <div class="field"><label>Nomor Urut</label><input type="text" id="fNum" placeholder="07"></div>
+        <div class="field"><label>Nama Produk *</label><input type="text" id="fNama" placeholder="Pintu Solid Ukir"></div>
+        <div class="field full"><label>Deskripsi Singkat (kartu) *</label><input type="text" id="fDescSingkat" placeholder="Kalimat singkat di kartu produk"></div>
+        <div class="field full"><label>Deskripsi Panjang (modal)</label><textarea id="fDescPanjang" placeholder="Deskripsi lengkap saat produk diklik"></textarea></div>
+        <div class="field"><label>Harga *</label><input type="text" id="fHarga" placeholder="Mulai Rp 1.500.000"></div>
+        <div class="field"><label>Nama File Gambar</label><input type="text" id="fGambar" placeholder="pintujati1.jpeg"><div class="hint">File harus sudah ada di folder website</div></div>
+        <div class="field"><label>Label Gambar</label><input type="text" id="fLabel" placeholder="Pintu Solid Jati"></div>
+        <div class="field full"><label>Spesifikasi</label><textarea id="fSpeks" placeholder="Bahan: Kayu Jati Grade A|Finishing: Natural / Duco|Garansi: 2 Tahun"></textarea><div class="hint">Pisahkan tiap spesifikasi dengan tanda | (pipe)</div></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-add" id="btnAdd" onclick="addProduct()">+ Tambah Produk</button>
+        <button class="btn-reset" onclick="resetForm()">Reset Form</button>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h3>Daftar <span>Produk</span></h3>
+      <div class="section-actions">
+        <input type="text" id="searchQuery" class="search-input" placeholder="Cari produk..." oninput="searchProducts()">
+        <button class="btn-reset" onclick="loadProducts()" style="font-size:0.7rem;">⟳ Refresh</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Nama Produk</th><th>Harga</th><th>Gambar</th><th>Aksi</th></tr></thead>
+        <tbody id="productTable"><tr class="loading-row"><td colspan="5">Memuat data...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="edit-overlay" id="editOverlay">
+  <div class="edit-box">
+    <button class="edit-close" onclick="closeEdit()">✕</button>
+    <h3>Edit Produk</h3>
+    <input type="hidden" id="eId">
+    <div class="form-grid">
+      <div class="field"><label>Nomor Urut</label><input type="text" id="eNum"></div>
+      <div class="field"><label>Nama Produk *</label><input type="text" id="eNama"></div>
+      <div class="field full"><label>Deskripsi Singkat</label><input type="text" id="eDescSingkat"></div>
+      <div class="field full"><label>Deskripsi Panjang</label><textarea id="eDescPanjang"></textarea></div>
+      <div class="field"><label>Harga</label><input type="text" id="eHarga"></div>
+      <div class="field"><label>Nama File Gambar</label><input type="text" id="eGambar"></div>
+      <div class="field"><label>Label Gambar</label><input type="text" id="eLabel"></div>
+      <div class="field full"><label>Spesifikasi (pisah |)</label><textarea id="eSpeks"></textarea></div>
+    </div>
+    <div class="form-actions" style="margin-top:1.5rem;">
+      <button class="btn-add" onclick="saveEdit()">Simpan Perubahan</button>
+      <button class="btn-reset" onclick="closeEdit()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h4>Hapus Produk?</h4>
+    <p id="confirmMsg">Produk ini akan dihapus permanen dari database.</p>
+    <div class="confirm-actions">
+      <button class="btn-confirm-del" onclick="confirmDelete()">Ya, Hapus</button>
+      <button class="btn-confirm-cancel" onclick="closeConfirm()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ============================================
+     KONFIGURASI — GANTI SEBELUM DEPLOY!
+     ============================================ */
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'ammj2026';
+
+  const API_URL = '/.netlify/functions/products';
+  /* ============================================ */
+
+  function doLogin() {
+    const u = document.getElementById('inputUser').value.trim();
+    const p = document.getElementById('inputPass').value;
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      sessionStorage.setItem('amj_admin', '1');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadProducts();
+    } else {
+      document.getElementById('loginError').classList.add('show');
+      document.getElementById('inputPass').value = '';
+    }
+  }
+  function doLogout() { sessionStorage.removeItem('amj_admin'); location.reload(); }
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  if (sessionStorage.getItem('amj_admin') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  }
+
+  function showToast(msg, type = 'info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.className = `toast ${type} show`;
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  let allProducts = [];
+  let deleteId = null;
+
+  async function loadProducts() {
+    const tbody = document.getElementById('productTable');
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="5">Memuat dari database...</td></tr>';
+    document.getElementById('statDb').textContent = '⏳';
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Server error: ${res.status}`);
+      allProducts = data.products || [];
+      renderTable(allProducts);
+      document.getElementById('statTotal').textContent = allProducts.length;
+      document.getElementById('statCustom').textContent = allProducts.filter(p =>
+        p.harga?.toLowerCase().includes('request') || p.harga?.toLowerCase().includes('sesuai')
+      ).length;
+      document.getElementById('statDb').textContent = '✓';
+    } catch (e) {
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="5">❌ Gagal memuat data. Cek koneksi database.</td></tr>';
+      document.getElementById('statDb').textContent = '✗';
+      showToast('Gagal memuat data dari database', 'error');
+    }
+  }
+
+  function renderTable(products) {
+    const tbody = document.getElementById('productTable');
+    if (!products.length) {
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="5">Belum ada produk. Tambah produk pertama!</td></tr>';
+      return;
+    }
+    tbody.innerHTML = products.map(p => `
+      <tr>
+        <td class="td-num">${p.urutan || '—'}</td>
+        <td class="td-name">${p.nama}</td>
+        <td class="td-price">${p.harga}</td>
+        <td><code style="font-size:0.7rem;color:var(--brown-300)">${p.gambar || '—'}</code></td>
+        <td class="td-actions">
+          <button class="btn-edit" onclick='openEdit(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Edit</button>
+          <button class="btn-del" onclick="askDelete(${p.id}, '${p.nama.replace(/'/g,"\\'")}')">Hapus</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function searchProducts() {
+    const query = document.getElementById('searchQuery').value.trim().toLowerCase();
+    const filtered = allProducts.filter(p => {
+      const nama = (p.nama || '').toLowerCase();
+      const harga = (p.harga || '').toLowerCase();
+      const desc = (p.desc_singkat || '').toLowerCase();
+      return nama.includes(query) || harga.includes(query) || desc.includes(query);
+    });
+    renderTable(filtered);
+  }
+
+  async function addProduct() {
+    const nama = document.getElementById('fNama').value.trim();
+    const descSingkat = document.getElementById('fDescSingkat').value.trim();
+    const harga = document.getElementById('fHarga').value.trim();
+    if (!nama || !descSingkat || !harga) { showToast('Isi minimal Nama, Deskripsi Singkat, dan Harga', 'error'); return; }
+    const btn = document.getElementById('btnAdd');
+    btn.disabled = true; btn.textContent = 'Menyimpan...';
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'add',
+          urutan: document.getElementById('fNum').value.trim(),
+          nama, desc_singkat: descSingkat,
+          desc_panjang: document.getElementById('fDescPanjang').value.trim() || descSingkat,
+          harga,
+          gambar: document.getElementById('fGambar').value.trim(),
+          label: document.getElementById('fLabel').value.trim(),
+          spesifikasi: document.getElementById('fSpeks').value.trim()
+        })
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Server error: ${res.status}`);
+      if (data?.success) { showToast(`"${nama}" berhasil ditambahkan!`, 'success'); resetForm(); loadProducts(); }
+      else throw new Error(data?.error || 'Gagal menyimpan produk.');
+    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = '+ Tambah Produk';
+  }
+
+  function resetForm() {
+    ['fNum','fNama','fDescSingkat','fDescPanjang','fHarga','fGambar','fLabel','fSpeks']
+      .forEach(id => document.getElementById(id).value = '');
+  }
+
+  function openEdit(p) {
+    document.getElementById('eId').value = p.id;
+    document.getElementById('eNum').value = p.urutan || '';
+    document.getElementById('eNama').value = p.nama || '';
+    document.getElementById('eDescSingkat').value = p.desc_singkat || '';
+    document.getElementById('eDescPanjang').value = p.desc_panjang || '';
+    document.getElementById('eHarga').value = p.harga || '';
+    document.getElementById('eGambar').value = p.gambar || '';
+    document.getElementById('eLabel').value = p.label || '';
+    document.getElementById('eSpeks').value = p.spesifikasi || '';
+    document.getElementById('editOverlay').classList.add('active');
+  }
+  function closeEdit() { document.getElementById('editOverlay').classList.remove('active'); }
+
+  async function saveEdit() {
+    const nama = document.getElementById('eNama').value.trim();
+    if (!nama) { showToast('Nama produk tidak boleh kosong', 'error'); return; }
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'update',
+          id: document.getElementById('eId').value,
+          urutan: document.getElementById('eNum').value.trim(),
+          nama,
+          desc_singkat: document.getElementById('eDescSingkat').value.trim(),
+          desc_panjang: document.getElementById('eDescPanjang').value.trim(),
+          harga: document.getElementById('eHarga').value.trim(),
+          gambar: document.getElementById('eGambar').value.trim(),
+          label: document.getElementById('eLabel').value.trim(),
+          spesifikasi: document.getElementById('eSpeks').value.trim()
+        })
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Server error: ${res.status}`);
+      if (data?.success) { showToast('Produk berhasil diperbarui!', 'success'); closeEdit(); loadProducts(); }
+      else throw new Error(data?.error || 'Gagal update produk.');
+    } catch (e) { showToast('Gagal update: ' + e.message, 'error'); }
+  }
+
+  function askDelete(id, nama) {
+    deleteId = id;
+    document.getElementById('confirmMsg').textContent = `"${nama}" akan dihapus permanen dari database.`;
+    document.getElementById('confirmOverlay').classList.add('active');
+  }
+  function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('active'); deleteId = null; }
+
+  async function confirmDelete() {
+    if (!deleteId) return;
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', id: deleteId })
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Server error: ${res.status}`);
+      if (data?.success) { showToast('Produk berhasil dihapus', 'success'); closeConfirm(); loadProducts(); }
+      else throw new Error(data?.error || 'Gagal hapus produk.');
+    } catch (e) { showToast('Gagal hapus: ' + e.message, 'error'); }
+  }
+
+  if (sessionStorage.getItem('amj_admin') === '1') loadProducts();
+</script>
+</body>
+</html>
